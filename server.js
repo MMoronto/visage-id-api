@@ -1,7 +1,9 @@
 const express = require('express');
+const bodyParser = require('body-parser');
 
 const app = express();
 
+app.use(bodyParser.json());
 const database = {
 	users: [
 		{
@@ -9,6 +11,14 @@ const database = {
 			name: "Jeffrey",
 			email: 'jeffrey@gmail.com',
 			password: 'cookies',
+			entries: 0,
+			joined: new Date()
+		},
+		{
+			id: '124';
+			name: "Sally",
+			email: 'sally@gmail.com',
+			password: 'funions',
 			entries: 0,
 			joined: new Date()
 		}
@@ -20,7 +30,12 @@ app.get('/', (req, res)=> {
 })
 
 app.post('/signin', (req, res) => {
-	res.json('signing')
+	if (req.body.email === database.users[0].email &&
+			req.body.password === database.users[0].password) {
+		res.json('success');
+	} else {
+		res.status(400).json('error logging in');
+	}
 })
 
 app.listen(3000, ()=> {
