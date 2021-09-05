@@ -39,11 +39,12 @@ app.post('/signin', (req, res) => {
 })
 
 app.post('/register', (req, res) => {
+	const { email, name, password } = req.body;
 	database.users.push({
 			id: '123';
-			name: "Jeffrey",
-			email: 'jeffrey@gmail.com',
-			password: 'cookies',
+			name: name,
+			email: email,
+			password: password,
 			entries: 0,
 			joined: new Date()
 	})
