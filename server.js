@@ -7,7 +7,7 @@ app.use(bodyParser.json());
 const database = {
 	users: [
 		{
-			id: '123';
+			id: '123',
 			name: "Jeffrey",
 			email: 'jeffrey@gmail.com',
 			password: 'cookies',
@@ -15,7 +15,7 @@ const database = {
 			joined: new Date()
 		},
 		{
-			id: '124';
+			id: '124',
 			name: "Sally",
 			email: 'sally@gmail.com',
 			password: 'funions',
@@ -41,7 +41,7 @@ app.post('/signin', (req, res) => {
 app.post('/register', (req, res) => {
 	const { email, name, password } = req.body;
 	database.users.push({
-			id: '123';
+			id: '123',
 			name: name,
 			email: email,
 			password: password,
