@@ -39,7 +39,14 @@ app.post('/signin', (req, res) => {
 })
 
 app.post('/register', (req, res) => {
-	req.body
+	database.users.push({
+			id: '123';
+			name: "Jeffrey",
+			email: 'jeffrey@gmail.com',
+			password: 'cookies',
+			entries: 0,
+			joined: new Date()
+	})
 })
 
 app.listen(3000, ()=> {
