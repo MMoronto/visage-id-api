@@ -39,7 +39,7 @@ app.post('/signin', (req, res) => {
 })
 
 app.post('/register', (req, res) => {
-	console.log('app is running on port 3000');
+	req.body
 })
 
 app.listen(3000, ()=> {
