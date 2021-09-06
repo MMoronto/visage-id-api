@@ -57,7 +57,7 @@ app.get('/profile/:id', (req, res) => {
 		if (user.id === id) {
 			res.json(user);
 		} else {
-			res.status(404j.son('no such user');
+			res.status(404).json('no such user');
 		}
 	})
 })
