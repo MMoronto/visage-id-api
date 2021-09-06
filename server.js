@@ -53,6 +53,13 @@ app.post('/register', (req, res) => {
 
 app.get('/profile/:id', (req, res) => {
 	const { id } = req.params;
+	database.users.forEach(user => {
+		if (user.id === id) {
+			res.json(user);
+		} else {
+			res.status(404j.son('no such user');
+		}
+	})
 })
 
 app.listen(3000, ()=> {
