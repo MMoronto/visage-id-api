@@ -10,6 +10,7 @@ const database = {
 		{
 			id: '123',
 			name: "Jeffrey",
+			password: 'cookies',
 			email: 'jeffrey@gmail.com',
 			entries: 0,
 			joined: new Date()
@@ -17,16 +18,10 @@ const database = {
 		{
 			id: '124',
 			name: "Sally",
+			password: 'bananas',
 			email: 'sally@gmail.com',
 			entries: 0,
 			joined: new Date()
-		}
-	],
-	login: [
-		{
-			id: '987',
-			hash: '',
-			email: 'jeffrey@gmail.com'
 		}
 	]
 }
