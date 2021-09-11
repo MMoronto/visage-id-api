@@ -77,13 +77,15 @@ app.post('/register', (req, res) => {
 
 app.get('/profile/:id', (req, res) => {
 	const { id } = req.params;
-	let found = false;
-	db.select('*').from('users').then(user=> {
-		console.log(user)
+	db.select('*').from('users').where({id})
+		.then(user=> {
+			if(user.length) {
+			res.json(user[0])
+			} else {
+				res.status(400).json('not found')
+			}
 	})
-	if (!found) {
-		res.status(400).json('not found');
-	}
+		.catch(err => res.status(400).json('error getting user'))
 })
 
 app.put('/image', (req, res) => {
@@ -101,28 +103,6 @@ app.put('/image', (req, res) => {
 	}	
 })
 
-// bcrypt.hash("bacon", null, null, function(err, hash) {
-// 	// Store hash in your password DB.
-// });
-
-// // Load hash from your password DB
-// bcrypt.compare("bacon", hash, function(err, res) {
-// 	// res = true
-// });
-
-// bcrypt.compare("veggies", hash, function(err, res) {
-// 	// res = false
-// });
-
 app.listen(3000, ()=> {
 	console.log('app is running on port 3000')
 })
-
-/*
-/ --> res = this is working
-/signin --> POST = success/fail
-/register --> POST = user
-/profile/:userId --> GET = user
-/image --> PUT --> user
-
-*/
