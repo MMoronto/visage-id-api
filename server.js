@@ -62,12 +62,17 @@ bcrypt.compare("veggies", '$2a$10$pPr6SUQAQ2GZX48mSwUI7uPuzh.9nCIlXlHPDGN4pMnuDa
 
 app.post('/register', (req, res) => {
 	const { email, name, password } = req.body;
-	db('users').insert({
-		email: email,
-		name: name,
-		joined: new Date()
-	}).then(console.log) 
-	res.json(database.users[database.users.length-1]);
+	db('users')
+		.returning("*")
+		.insert({
+			email: email,
+			name: name,
+			joined: new Date()
+		})
+		.then(user => {
+			res.json(user[0]);
+		})
+		.catch(err => res.status(400).json('unable to register')) 
 })
 
 app.get('/profile/:id', (req, res) => {
