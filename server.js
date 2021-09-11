@@ -2,6 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const bcrypt = require('bcrypt-nodejs');
 const cors = require('cors');
+const knex = require('knex');
 
 const app = express();
 
@@ -51,9 +52,6 @@ bcrypt.compare("veggies", '$2a$10$pPr6SUQAQ2GZX48mSwUI7uPuzh.9nCIlXlHPDGN4pMnuDa
 
 app.post('/register', (req, res) => {
 	const { email, name, password } = req.body;
-	// bcrypt.hash(password, null, null, function(err, hash) {
-	// 	console.log(hash);
-	// });
 	database.users.push({
 			id: '125',
 			name: name,
