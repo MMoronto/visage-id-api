@@ -5,7 +5,7 @@ const cors = require('cors');
 const knex = require('knex');
 
 const postgres = knex({
-  client: 'mysql',
+  client: 'pg',
   connection: {
     host : '127.0.0.1',
     user : 't2wycemo',
@@ -14,7 +14,9 @@ const postgres = knex({
   }
 });
 
-console.log(postgres.select('*').from('users'));
+postgres.select('*').from('users').then(data => {
+	console.log(data);
+});
 
 const app = express();
 
