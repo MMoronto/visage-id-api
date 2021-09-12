@@ -90,11 +90,12 @@ app.get('/profile/:id', (req, res) => {
 
 app.put('/image', (req, res) => {
 	const { id } = req.body;
-  db.where('id', '=', id)
-  .update({
-    status: 'archived',
-    thisKeyIsSkipped: undefined
-  })	
+  db.where('id', '=', id) 
+  .increment('entries', 1)
+  .returning('entries')
+  .then(entries => {
+  	console.log(entries);
+  })
 })
 
 app.listen(3000, ()=> {
