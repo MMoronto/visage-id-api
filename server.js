@@ -44,7 +44,7 @@ app.get('/', (req, res)=> {
 	res.send(database.users);
 })
 
-// Register user and get their passwords
+// Update users and login tables
 app.post('/signin', (req, res) => {
 	bcrypt.compare("apples", '$2a$10$pPr6SUQAQ2GZX48mSwUI7uPuzh.9nCIlXlHPDGN4pMnuDacv6lBoy', function(err, res) {
 	console.log('first guess', res)
@@ -64,15 +64,25 @@ bcrypt.compare("veggies", '$2a$10$pPr6SUQAQ2GZX48mSwUI7uPuzh.9nCIlXlHPDGN4pMnuDa
 app.post('/register', (req, res) => {
 	const { email, name, password } = req.body;
 	const hash = bcrypt.hashSync(password);
-	return db('users')
-		.returning("*")
-		.insert({
-			email: email,
-			name: name,
-			joined: new Date()
-		})
-		.then(user => {
-			res.json(user[0]);
+		db.transaction(trx => {
+			trx.insert({
+				hash: hash,
+				email: email
+			})
+			.into('login')
+			.returning('email')
+			.then(loginEmail => {
+				return trx('users')
+					.returning("*")
+					.insert({
+						email: loginEmail,
+						name: name,
+						joined: new Date()
+					})
+					.then(user => {
+						res.json(user[0]);
+					})
+			})
 		})
 		.catch(err => res.status(400).json('unable to register')) 
 })
