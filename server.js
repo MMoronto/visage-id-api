@@ -58,21 +58,12 @@ app.post('/signin', (req, res) => {
 						res.json(user[0])
 					})
 					.catch(err => res.status(400).json('unable to get user'))
+			} else {
+				res.status(400).json('wrong credentials')
 			}
 		})
 		.catch(err => res.status(400).json('wrong credentials'))
 });
-
-// bcrypt.compare("veggies", '$2a$10$pPr6SUQAQ2GZX48mSwUI7uPuzh.9nCIlXlHPDGN4pMnuDacv6lBoy', function(err, res) {
-// 	console.log('second guess', res)
-// });
-// 	if (req.body.email === database.users[0].email &&
-// 			req.body.password === database.users[0].password) {
-// 		res.json(database.users[0]);
-// 	} else {
-// 		res.status(400).json('error logging in');
-// 	}
-// })
 
 app.post('/register', (req, res) => {
 	const { email, name, password } = req.body;
