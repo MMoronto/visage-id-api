@@ -46,8 +46,10 @@ app.get('/', (req, res)=> {
 
 // Update users and login tables
 app.post('/signin', (req, res) => {
-	bcrypt.compare("apples", '$2a$10$pPr6SUQAQ2GZX48mSwUI7uPuzh.9nCIlXlHPDGN4pMnuDacv6lBoy', function(err, res) {
-	console.log('first guess', res)
+	db.select('email', 'hash').from('login')
+		.then(data => {
+			console.log(data);
+		})
 });
 
 bcrypt.compare("veggies", '$2a$10$pPr6SUQAQ2GZX48mSwUI7uPuzh.9nCIlXlHPDGN4pMnuDacv6lBoy', function(err, res) {
