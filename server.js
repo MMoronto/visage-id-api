@@ -44,24 +44,35 @@ app.get('/', (req, res)=> {
 	res.send(database.users);
 })
 
-// Update users and login tables
 app.post('/signin', (req, res) => {
 	db.select('email', 'hash').from('login')
+		.where('email', '=', req.body.email)
 		.then(data => {
-			console.log(data);
+			const isValid = bcrypt.compareSync(req.body.password, data[0].hash);
+			console.log(isValid);
+			if(isValid) {
+				return db.select('*').from('users')
+					.where('email', '=', req.body.email)
+					.then(user => {
+						console.log('user');
+						res.json(user[0])
+					})
+					.catch(err => res.status(400).json('unable to get user'))
+			}
 		})
+		.catch(err => res.status(400).json('wrong credentials'))
 });
 
-bcrypt.compare("veggies", '$2a$10$pPr6SUQAQ2GZX48mSwUI7uPuzh.9nCIlXlHPDGN4pMnuDacv6lBoy', function(err, res) {
-	console.log('second guess', res)
-});
-	if (req.body.email === database.users[0].email &&
-			req.body.password === database.users[0].password) {
-		res.json(database.users[0]);
-	} else {
-		res.status(400).json('error logging in');
-	}
-})
+// bcrypt.compare("veggies", '$2a$10$pPr6SUQAQ2GZX48mSwUI7uPuzh.9nCIlXlHPDGN4pMnuDacv6lBoy', function(err, res) {
+// 	console.log('second guess', res)
+// });
+// 	if (req.body.email === database.users[0].email &&
+// 			req.body.password === database.users[0].password) {
+// 		res.json(database.users[0]);
+// 	} else {
+// 		res.status(400).json('error logging in');
+// 	}
+// })
 
 app.post('/register', (req, res) => {
 	const { email, name, password } = req.body;
