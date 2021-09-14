@@ -44,6 +44,7 @@ app.get('/', (req, res)=> {
 	res.send(database.users);
 })
 
+// Register user and get their passwords
 app.post('/signin', (req, res) => {
 	bcrypt.compare("apples", '$2a$10$pPr6SUQAQ2GZX48mSwUI7uPuzh.9nCIlXlHPDGN4pMnuDacv6lBoy', function(err, res) {
 	console.log('first guess', res)
@@ -62,7 +63,8 @@ bcrypt.compare("veggies", '$2a$10$pPr6SUQAQ2GZX48mSwUI7uPuzh.9nCIlXlHPDGN4pMnuDa
 
 app.post('/register', (req, res) => {
 	const { email, name, password } = req.body;
-	db('users')
+	const hash = bcrypt.hashSync(password);
+	return db('users')
 		.returning("*")
 		.insert({
 			email: email,
